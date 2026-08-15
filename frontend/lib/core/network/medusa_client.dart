@@ -21,27 +21,80 @@ class MedusaClient {
   Future<Map<String, dynamic>> get(
     String path, {
     Map<String, String>? queryParameters,
+  }) {
+    return _request(
+      'GET',
+      path,
+      queryParameters: queryParameters,
+    );
+  }
+
+  Future<Map<String, dynamic>> post(
+    String path, {
+    Map<String, dynamic>? body,
+    Map<String, String>? queryParameters,
+  }) {
+    return _request(
+      'POST',
+      path,
+      body: body,
+      queryParameters: queryParameters,
+    );
+  }
+
+  Future<Map<String, dynamic>> delete(
+    String path, {
+    Map<String, String>? queryParameters,
+  }) {
+    return _request(
+      'DELETE',
+      path,
+      queryParameters: queryParameters,
+    );
+  }
+
+  Future<Map<String, dynamic>> _request(
+    String method,
+    String path, {
+    Map<String, dynamic>? body,
+    Map<String, String>? queryParameters,
   }) async {
     final uri = _buildUri(path, queryParameters: queryParameters);
-    final response = await _httpClient.get(uri, headers: _headers);
+    final encodedBody = body == null ? null : jsonEncode(body);
 
-    Map<String, dynamic> body = const {};
+    late final http.Response response;
+    switch (method) {
+      case 'GET':
+        response = await _httpClient.get(uri, headers: _headers);
+      case 'POST':
+        response = await _httpClient.post(
+          uri,
+          headers: _headers,
+          body: encodedBody,
+        );
+      case 'DELETE':
+        response = await _httpClient.delete(uri, headers: _headers);
+      default:
+        throw ArgumentError.value(method, 'method', 'Unsupported HTTP method');
+    }
+
+    Map<String, dynamic> responseBody = const {};
     if (response.body.isNotEmpty) {
       final decoded = jsonDecode(response.body);
-      if (decoded is Map<String, dynamic>) {
-        body = decoded;
+      if (decoded is Map) {
+        responseBody = Map<String, dynamic>.from(decoded);
       }
     }
 
     if (response.statusCode < 200 || response.statusCode >= 300) {
       throw MedusaApiException(
         statusCode: response.statusCode,
-        message: body['message']?.toString() ??
+        message: responseBody['message']?.toString() ??
             'Medusa request failed with status ${response.statusCode}.',
       );
     }
 
-    return body;
+    return responseBody;
   }
 
   Map<String, String> get _headers {

@@ -16,14 +16,15 @@ class ProductImages extends StatefulWidget {
 }
 
 class _ProductImagesState extends State<ProductImages> {
-  late PageController _controller;
-
+  late final PageController _controller;
   int _currentPage = 0;
 
   @override
   void initState() {
-    _controller =
-        PageController(viewportFraction: 0.9, initialPage: _currentPage);
+    _controller = PageController(
+      viewportFraction: 0.9,
+      initialPage: _currentPage,
+    );
     super.initState();
   }
 
@@ -35,6 +36,27 @@ class _ProductImagesState extends State<ProductImages> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.images.isEmpty) {
+      return SliverToBoxAdapter(
+        child: AspectRatio(
+          aspectRatio: 1,
+          child: Padding(
+            padding: const EdgeInsets.all(defaultPadding),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(defaultBorderRadious * 2),
+                ),
+              ),
+              alignment: Alignment.center,
+              child: const Icon(Icons.image_outlined, size: 48),
+            ),
+          ),
+        ),
+      );
+    }
+
     return SliverToBoxAdapter(
       child: AspectRatio(
         aspectRatio: 1,
@@ -76,9 +98,10 @@ class _ProductImagesState extends State<ProductImages> {
                       widget.images.length,
                       (index) => Padding(
                         padding: EdgeInsets.only(
-                            right: index == (widget.images.length - 1)
-                                ? 0
-                                : defaultPadding / 4),
+                          right: index == widget.images.length - 1
+                              ? 0
+                              : defaultPadding / 4,
+                        ),
                         child: CircleAvatar(
                           radius: 3,
                           backgroundColor: Theme.of(context)
@@ -91,7 +114,7 @@ class _ProductImagesState extends State<ProductImages> {
                     ),
                   ),
                 ),
-              )
+              ),
           ],
         ),
       ),

@@ -63,19 +63,18 @@ class MedusaClient {
     final encodedBody = body == null ? null : jsonEncode(body);
 
     late final http.Response response;
-    switch (method) {
-      case 'GET':
-        response = await _httpClient.get(uri, headers: _headers);
-      case 'POST':
-        response = await _httpClient.post(
-          uri,
-          headers: _headers,
-          body: encodedBody,
-        );
-      case 'DELETE':
-        response = await _httpClient.delete(uri, headers: _headers);
-      default:
-        throw ArgumentError.value(method, 'method', 'Unsupported HTTP method');
+    if (method == 'GET') {
+      response = await _httpClient.get(uri, headers: _headers);
+    } else if (method == 'POST') {
+      response = await _httpClient.post(
+        uri,
+        headers: _headers,
+        body: encodedBody,
+      );
+    } else if (method == 'DELETE') {
+      response = await _httpClient.delete(uri, headers: _headers);
+    } else {
+      throw ArgumentError.value(method, 'method', 'Unsupported HTTP method');
     }
 
     Map<String, dynamic> responseBody = const {};

@@ -6,6 +6,7 @@ Standalone Medusa v2.19 backend for the Flutter storefront in `../frontend`.
 
 - Medusa 2.19
 - Node.js 22 LTS
+- pnpm 10.11.1
 - PostgreSQL
 - TypeScript
 
@@ -13,10 +14,14 @@ Standalone Medusa v2.19 backend for the Flutter storefront in `../frontend`.
 
 ```bash
 cp .env.template .env
-npm install
-npm run db:migrate
-npm run dev
+corepack enable
+corepack prepare pnpm@10.11.1 --activate
+pnpm install --frozen-lockfile
+pnpm db:migrate
+pnpm dev
 ```
+
+For local PostgreSQL, `docker-compose.yml` provides a `postgres:16-alpine` service matching the default `.env.template` database URL.
 
 The Admin dashboard is served by Medusa. The public backend status endpoint is:
 

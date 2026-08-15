@@ -116,6 +116,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const CartScreen(),
       );
+    case checkoutScreenRoute:
+      return MaterialPageRoute(
+        builder: (context) => const CheckoutScreen(),
+      );
     default:
       return MaterialPageRoute(
         builder: (context) => const OnBordingScreen(),

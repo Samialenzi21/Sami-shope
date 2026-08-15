@@ -86,6 +86,10 @@ class CartRepository {
     return StoreCart.fromJson(Map<String, dynamic>.from(parent));
   }
 
+  void clearSession() {
+    _cartId = null;
+  }
+
   Future<StoreCart> _ensureCart() async {
     final current = await retrieveCurrentCart();
     if (current != null) {

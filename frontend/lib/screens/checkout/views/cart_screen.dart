@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/features/cart/data/models/store_cart.dart';
 import 'package:shop/features/cart/presentation/cart_controller.dart';
+import 'package:shop/route/route_constants.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -72,7 +73,7 @@ class _CartScreenState extends State<CartScreen> {
                     defaultPadding,
                     defaultPadding,
                     defaultPadding,
-                    140,
+                    160,
                   ),
                   itemCount: items.length,
                   separatorBuilder: (_, __) =>
@@ -312,9 +313,14 @@ class _CartSummary extends StatelessWidget {
                   ],
                 ),
               ),
-              Text(
-                '${cart.quantity} item${cart.quantity == 1 ? '' : 's'}',
-                style: Theme.of(context).textTheme.bodyMedium,
+              SizedBox(
+                height: 46,
+                child: FilledButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, checkoutScreenRoute);
+                  },
+                  child: const Text('Checkout'),
+                ),
               ),
             ],
           ),

@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - feat/backend-medusa
     paths:
       - backend/**
       - .github/workflows/backend-ci.yml
@@ -77,6 +76,15 @@ jobs:
 
       - name: Run database migrations
         run: pnpm db:migrate
+
+      - name: Bootstrap Saudi commerce
+        run: pnpm bootstrap:saudi
+
+      - name: Verify bootstrap is repeatable
+        run: pnpm bootstrap:saudi
+
+      - name: Verify Saudi commerce configuration
+        run: pnpm verify:saudi
 
       - name: HTTP integration tests
         run: pnpm test:integration:http

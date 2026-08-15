@@ -4,6 +4,7 @@
   "private": true,
   "description": "Medusa backend for Sami Shope",
   "license": "MIT",
+  "packageManager": "pnpm@10.11.1",
   "keywords": [
     "medusa",
     "ecommerce",

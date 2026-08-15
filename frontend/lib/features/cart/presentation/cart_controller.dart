@@ -52,6 +52,13 @@ class CartController extends ChangeNotifier {
     });
   }
 
+  void clearCompletedCart() {
+    _repository.clearSession();
+    _cart = null;
+    _errorMessage = null;
+    notifyListeners();
+  }
+
   Future<void> _run(Future<void> Function() operation) async {
     if (_isLoading) {
       return;

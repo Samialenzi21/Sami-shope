@@ -1,26 +1,22 @@
 {
-  "name": "sami-shope-backend",
-  "version": "0.1.0",
-  "private": true,
-  "description": "Medusa backend for Sami Shope",
+  "name": "@dtc/backend",
+  "version": "0.0.1",
+  "description": "A starter for Medusa projects.",
+  "author": "Medusa (https://medusajs.com)",
   "license": "MIT",
-  "packageManager": "pnpm@10.11.1",
   "keywords": [
-    "medusa",
+    "sqlite",
+    "postgres",
+    "typescript",
     "ecommerce",
     "headless",
-    "postgres",
-    "flutter"
+    "medusa"
   ],
   "scripts": {
     "build": "medusa build",
     "start": "medusa start",
     "dev": "medusa develop",
     "lint": "medusa lint",
-    "db:migrate": "medusa db:migrate",
-    "db:generate": "medusa db:generate",
-    "bootstrap:saudi": "medusa exec ./src/scripts/bootstrap-saudi.ts",
-    "verify:saudi": "medusa exec ./src/scripts/verify-saudi-bootstrap.ts",
     "test:integration:http": "TEST_TYPE=integration:http NODE_OPTIONS=--experimental-vm-modules jest --silent=false --runInBand --forceExit",
     "test:integration:modules": "TEST_TYPE=integration:modules NODE_OPTIONS=--experimental-vm-modules jest --silent=false --runInBand --forceExit",
     "test:unit": "TEST_TYPE=unit NODE_OPTIONS=--experimental-vm-modules jest --silent --runInBand --forceExit"
@@ -41,17 +37,14 @@
     "zod": "4.2.0"
   },
   "devDependencies": {
-    "@medusajs/eslint-plugin": "2.19.0",
     "@medusajs/test-utils": "2.19.0",
     "@swc/core": "^1.7.28",
     "@swc/jest": "^0.2.36",
     "@types/jest": "^29.5.13",
-    "@types/node": "^22.0.0",
+    "@types/node": "^20.12.11",
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.2.25",
-    "eslint": "^9.39.4",
     "jest": "^29.7.0",
-    "jiti": "^2.7.0",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

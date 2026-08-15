@@ -1,7 +1,7 @@
 # Upstream source
 
-The initial backend application was imported from the official Medusa DTC starter:
-`medusajs/dtc-starter/apps/backend` (`main`).
+This backend was bootstrapped from the official Medusa `medusajs/dtc-starter` backend application.
 
-Sami-shope keeps this backend as a standalone directory and does not import the starter's Next.js storefront or monorepo wrapper.
-Project-specific behavior must use supported Medusa extension points rather than modifying Medusa core.
+Only `apps/backend` was imported. The DTC Next.js storefront was intentionally excluded because Sami-shope uses Flutter as its frontend.
+
+Baseline Medusa version at import: 2.19.0.

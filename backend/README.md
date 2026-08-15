@@ -1,81 +1,62 @@
-# Sami Shope Backend
+<p align="center">
+  <a href="https://www.medusajs.com">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/59018053/229103275-b5e482bb-4601-46e6-8142-244f531cebdb.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/59018053/229103726-e5b529a3-9b3f-4970-8a1f-c6af37f087bf.svg">
+    <img alt="Medusa logo" src="https://user-images.githubusercontent.com/59018053/229103726-e5b529a3-9b3f-4970-8a1f-c6af37f087bf.svg">
+    </picture>
+  </a>
+</p>
+<h1 align="center">
+  Medusa
+</h1>
 
-Standalone Medusa v2.19 backend for the Flutter storefront in `../frontend`.
+<h4 align="center">
+  <a href="https://docs.medusajs.com">Documentation</a> |
+  <a href="https://www.medusajs.com">Website</a>
+</h4>
 
-## Stack
+<p align="center">
+  Building blocks for digital commerce
+</p>
+<p align="center">
+  <a href="https://github.com/medusajs/medusa/blob/master/CONTRIBUTING.md">
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat" alt="PRs welcome!" />
+  </a>
+    <a href="https://www.producthunt.com/posts/medusa"><img src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Day-%23DA552E" alt="Product Hunt"></a>
+  <a href="https://discord.gg/xpCwq3Kfn8">
+    <img src="https://img.shields.io/badge/chat-on%20discord-7289DA.svg" alt="Discord Chat" />
+  </a>
+  <a href="https://twitter.com/intent/follow?screen_name=medusajs">
+    <img src="https://img.shields.io/twitter/follow/medusajs.svg?label=Follow%20@medusajs" alt="Follow @medusajs" />
+  </a>
+</p>
 
-- Medusa 2.19
-- Node.js 22 LTS
-- pnpm 10.11.1
-- PostgreSQL
-- TypeScript
+## Compatibility
 
-## Local setup
+This starter is compatible with versions >= 2 of `@medusajs/medusa`. 
 
-```bash
-cp .env.template .env
-corepack enable
-corepack prepare pnpm@10.11.1 --activate
-pnpm install --frozen-lockfile
-pnpm db:migrate
-pnpm bootstrap:saudi
-pnpm dev
-```
+## Getting Started
 
-For local PostgreSQL, `docker-compose.yml` provides a `postgres:16-alpine` service matching the default `.env.template` database URL.
+Visit the [Quickstart Guide](https://docs.medusajs.com/learn/installation) to set up a server.
 
-## Saudi commerce bootstrap
+Visit the [Docs](https://docs.medusajs.com/learn/installation#get-started) to learn more about our system requirements.
 
-Run this once after migrations on a new environment:
+## What is Medusa
 
-```bash
-pnpm bootstrap:saudi
-```
+Medusa is a set of commerce modules and tools that allow you to build rich, reliable, and performant commerce applications without reinventing core commerce logic. The modules can be customized and used to build advanced ecommerce stores, marketplaces, or any product that needs foundational commerce primitives. All modules are open-source and freely available on npm.
 
-It creates the production foundation without demo products:
+Learn more about [Medusa’s architecture](https://docs.medusajs.com/learn/introduction/architecture) and [commerce modules](https://docs.medusajs.com/learn/fundamentals/modules/commerce-modules) in the Docs.
 
-- `Sami Shope` store with SAR as the default currency.
-- Saudi Arabia region (`sa`).
-- Storefront sales channel.
-- Publishable API key for Flutter.
-- Riyadh stock location.
-- Saudi tax region.
-- Manual system payment provider for the region.
-- Pickup fulfillment set and a free `Store Pickup` option.
+## Community & Contributions
 
-The command prints the publishable API key. Supply that public key to Flutter as `MEDUSA_PUBLISHABLE_KEY`; do not hard-code environment-specific values in the app source.
+The community and core team are available in [GitHub Discussions](https://github.com/medusajs/medusa/discussions), where you can ask for support, discuss roadmap, and share ideas.
 
-The bootstrap is safe to run again after a completed run: it detects the existing `Sami Shope` store and exits without creating duplicates.
+Join our [Discord server](https://discord.com/invite/medusajs) to meet other community members.
 
-To validate an environment:
+## Other channels
 
-```bash
-pnpm verify:saudi
-```
-
-## APIs
-
-The Admin dashboard is served by Medusa. The public backend status endpoint is:
-
-```text
-GET /status
-```
-
-The Flutter catalog uses Medusa's Store API:
-
-```text
-GET /store/products
-```
-
-Store API requests that require a publishable API key must send the key configured for the deployed Medusa instance. Flutter receives the backend URL and publishable key through `--dart-define`; secrets must not be committed to this repository.
-
-## Architecture rules
-
-- Backend code stays inside `backend/`.
-- Flutter code stays inside `frontend/`.
-- Do not modify Medusa core.
-- Do not seed fake/demo catalog data into production environments.
-- Project behavior belongs in Medusa modules, workflows, subscribers, links, API routes, and other supported extension points.
-- Build the single-store order flow first; multi-store scoping and realtime are added after the base flow is verified.
-
-See `UPSTREAM.md` for the official starter source used to bootstrap this directory.
+- [GitHub Issues](https://github.com/medusajs/medusa/issues)
+- [Twitter](https://twitter.com/medusajs)
+- [LinkedIn](https://www.linkedin.com/company/medusajs)
+- [Medusa Blog](https://medusajs.com/blog/)

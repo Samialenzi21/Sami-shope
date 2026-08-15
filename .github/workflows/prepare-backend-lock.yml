@@ -45,4 +45,5 @@ jobs:
             exit 0
           fi
           git commit -m "chore(backend): lock Medusa dependencies"
+          git pull --rebase origin feat/backend-medusa
           git push origin HEAD:feat/backend-medusa

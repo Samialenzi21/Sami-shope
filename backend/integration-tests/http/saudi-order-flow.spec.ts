@@ -31,16 +31,21 @@ medusaIntegrationTestRunner({
           type: "publishable",
         })
 
-        expect(salesChannel).toBeDefined()
-        expect(region).toBeDefined()
+        if (!salesChannel || !region || !publishableKey) {
+          throw new Error("Saudi commerce bootstrap did not create required data.")
+        }
+
         expect(region.currency_code).toBe("sar")
-        expect(publishableKey?.token).toMatch(/^pk_/)
+        expect(publishableKey.token).toMatch(/^pk_/)
 
         const { data: shippingProfiles } = await query.graph({
           entity: "shipping_profile",
           fields: ["id"],
         })
-        expect(shippingProfiles[0]?.id).toBeDefined()
+        const shippingProfile = shippingProfiles[0]
+        if (!shippingProfile) {
+          throw new Error("Default shipping profile was not found.")
+        }
 
         const {
           result: [product],
@@ -51,7 +56,7 @@ medusaIntegrationTestRunner({
                 title: "E2E Spanish Latte",
                 description: "Integration-test-only product",
                 status: ProductStatus.PUBLISHED,
-                shipping_profile_id: shippingProfiles[0].id,
+                shipping_profile_id: shippingProfile.id,
                 sales_channels: [{ id: salesChannel.id }],
                 options: [
                   {
@@ -79,6 +84,10 @@ medusaIntegrationTestRunner({
             ],
           },
         })
+
+        if (!product?.variants?.[0]) {
+          throw new Error("E2E product variant was not created.")
+        }
 
         const storeHeaders = {
           headers: {
@@ -137,9 +146,11 @@ medusaIntegrationTestRunner({
         expect(shippingResponse.status).toBe(200)
 
         const pickupOption = shippingResponse.data.shipping_options.find(
-          (option) => option.name === "Store Pickup"
+          (option: { id: string; name: string }) => option.name === "Store Pickup"
         )
-        expect(pickupOption).toBeDefined()
+        if (!pickupOption) {
+          throw new Error("Store Pickup shipping option was not returned.")
+        }
 
         const shippingMethodResponse = await api.post(
           `/store/carts/${cart.id}/shipping-methods`,

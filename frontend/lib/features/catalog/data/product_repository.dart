@@ -1,15 +1,25 @@
 import 'package:shop/core/network/medusa_client.dart';
 import 'package:shop/features/catalog/data/models/store_product.dart';
+import 'package:shop/features/commerce/data/region_repository.dart';
 
 class ProductRepository {
-  ProductRepository({MedusaClient? client}) : _client = client ?? MedusaClient();
+  ProductRepository({
+    MedusaClient? client,
+    RegionRepository? regionRepository,
+  })  : _client = client ?? MedusaClient(),
+        _regionRepository = regionRepository ?? RegionRepository(client: client);
 
   final MedusaClient _client;
+  final RegionRepository _regionRepository;
 
   Future<List<StoreProduct>> listProducts({int limit = 20}) async {
+    final regionId = await _regionRepository.getSaudiRegionId();
     final response = await _client.get(
       '/store/products',
-      queryParameters: {'limit': '$limit'},
+      queryParameters: {
+        'limit': '$limit',
+        'region_id': regionId,
+      },
     );
 
     final rawProducts = response['products'];
@@ -25,7 +35,11 @@ class ProductRepository {
   }
 
   Future<StoreProduct> retrieveProduct(String id) async {
-    final response = await _client.get('/store/products/$id');
+    final regionId = await _regionRepository.getSaudiRegionId();
+    final response = await _client.get(
+      '/store/products/$id',
+      queryParameters: {'region_id': regionId},
+    );
     final rawProduct = response['product'];
 
     if (rawProduct is! Map) {

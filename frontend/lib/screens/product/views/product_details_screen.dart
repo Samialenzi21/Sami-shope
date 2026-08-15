@@ -5,6 +5,7 @@ import 'package:shop/components/cart_button.dart';
 import 'package:shop/components/custom_modal_bottom_sheet.dart';
 import 'package:shop/components/product/product_card.dart';
 import 'package:shop/constants.dart';
+import 'package:shop/features/cart/presentation/cart_controller.dart';
 import 'package:shop/features/catalog/data/models/store_product.dart';
 import 'package:shop/screens/product/views/product_returns_screen.dart';
 
@@ -38,6 +39,27 @@ class ProductDetailsScreen extends StatelessWidget {
 
   Widget _buildMedusaProduct(BuildContext context, StoreProduct item) {
     return Scaffold(
+      bottomNavigationBar: item.isPurchasable
+          ? CartButton(
+              price: item.price!,
+              currencyCode: item.currencyCode ?? 'SAR',
+              title: 'Add to cart',
+              press: () async {
+                try {
+                  await CartController.instance.addProduct(item);
+                  if (!context.mounted) return;
+                  Navigator.pushNamed(context, cartScreenRoute);
+                } catch (error) {
+                  if (!context.mounted) return;
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(
+                      SnackBar(content: Text(error.toString())),
+                    );
+                }
+              },
+            )
+          : null,
       body: SafeArea(
         child: CustomScrollView(
           slivers: [

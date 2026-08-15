@@ -1,0 +1,33 @@
+# Environment
+.env
+.env.*
+!.env.example
+!.env.template
+
+# Secrets / certificates
+*.pem
+*.key
+*.p12
+*.p8
+*.jks
+*.keystore
+
+# Node / Medusa
+node_modules/
+backend/.medusa/
+backend/dist/
+backend/.cache/
+
+# Flutter / Dart
+frontend/.dart_tool/
+frontend/.flutter-plugins
+frontend/.flutter-plugins-dependencies
+frontend/.packages
+frontend/build/
+frontend/coverage/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

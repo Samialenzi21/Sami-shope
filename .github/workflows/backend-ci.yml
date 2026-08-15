@@ -83,6 +83,12 @@ jobs:
       - name: Verify bootstrap is repeatable
         run: pnpm bootstrap:saudi
 
+      - name: Seed development catalog
+        run: pnpm seed:catalog
+
+      - name: Verify catalog seed is repeatable
+        run: pnpm seed:catalog
+
       - name: Verify Saudi commerce configuration
         run: pnpm verify:saudi
 
